@@ -1,6 +1,7 @@
 /// <reference types="webpack-dev-server" />
 const path = require("path");
 
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -10,6 +11,10 @@ const SRC_PATH = path.resolve(__dirname, "./src");
 const PUBLIC_PATH = path.resolve(__dirname, "../public");
 const UPLOAD_PATH = path.resolve(__dirname, "../upload");
 const DIST_PATH = path.resolve(__dirname, "../dist");
+
+/** @type {(env: Record<string, string>) => import('webpack').Configuration} */
+module.exports = (env = {}) => {
+const analyze = env.analyze;
 
 /** @type {import('webpack').Configuration} */
 const config = {
@@ -144,4 +149,9 @@ const config = {
   ],
 };
 
-module.exports = config;
+if (analyze) {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
+
+return config;
+};
