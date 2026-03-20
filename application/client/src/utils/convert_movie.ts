@@ -2,7 +2,6 @@ import { loadFFmpeg } from "@web-speed-hackathon-2026/client/src/utils/load_ffmp
 
 interface Options {
   extension: string;
-  size?: number | undefined;
 }
 
 /**
@@ -11,12 +10,6 @@ interface Options {
 export async function convertMovie(file: File, options: Options): Promise<Blob> {
   const ffmpeg = await loadFFmpeg();
 
-  const cropOptions = [
-    "'min(iw,ih)':'min(iw,ih)'",
-    options.size ? `scale=${options.size}:${options.size}` : undefined,
-  ]
-    .filter(Boolean)
-    .join(",");
   const exportFile = `export.${options.extension}`;
 
   await ffmpeg.writeFile("file", new Uint8Array(await file.arrayBuffer()));
@@ -29,7 +22,7 @@ export async function convertMovie(file: File, options: Options): Promise<Blob> 
     "-r",
     "10",
     "-vf",
-    `crop=${cropOptions}`,
+    "crop='min(iw,ih)':'min(iw,ih)'",
     "-an",
     exportFile,
   ]);
