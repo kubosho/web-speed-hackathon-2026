@@ -24,11 +24,20 @@ staticRouter.use("/assets", (_req, res, next) => {
   next();
 });
 
+// ID-based media files: content doesn't change, safe to cache long-term
+for (const path of ["/images", "/movies", "/sounds"]) {
+  staticRouter.use(path, (_req, res, next) => {
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    next();
+  });
+}
+
 // SPA 対応のため、ファイルが存在しないときに index.html を返す
 staticRouter.use(history());
 
 staticRouter.use(
   serveStatic(UPLOAD_PATH, {
+    cacheControl: false,
     etag: false,
     lastModified: false,
   }),
@@ -36,6 +45,7 @@ staticRouter.use(
 
 staticRouter.use(
   serveStatic(PUBLIC_PATH, {
+    cacheControl: false,
     etag: false,
     lastModified: false,
   }),
@@ -43,6 +53,7 @@ staticRouter.use(
 
 staticRouter.use(
   serveStatic(CLIENT_DIST_PATH, {
+    cacheControl: false,
     etag: false,
     lastModified: false,
   }),
