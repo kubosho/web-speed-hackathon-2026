@@ -12,10 +12,12 @@
     "format:oxlint": "oxlint --fix",
     "format:oxfmt": "oxfmt",
     "lighthouse": "lhci autorun --config ../lighthouserc.cjs",
-    "lighthouse:page": "lhci autorun --config ../lighthouserc.cjs --collect.numberOfRuns=1"
+    "lighthouse:page": "lhci autorun --config ../lighthouserc.cjs --collect.numberOfRuns=1",
+    "knip": "knip"
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1",
+    "knip": "6.0.0",
     "oxfmt": "0.36.0",
     "oxlint": "1.43.0"
   },

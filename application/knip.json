@@ -1,0 +1,23 @@
+{
+  "workspaces": {
+    ".": {},
+    "client": {
+      "project": ["src/**/*.{ts,tsx,css}"],
+      "ignoreDependencies": [
+        "@web-speed-hackathon-2026/client",
+        "buffer",
+        "standardized-audio-context"
+      ]
+    },
+    "server": {
+      "entry": ["scripts/*.ts"],
+      "project": ["src/**/*.ts", "scripts/**/*.ts"],
+      "ignoreDependencies": ["@web-speed-hackathon-2026/server", "sqlite3"]
+    },
+    "e2e": {
+      "entry": ["src/**/*.test.ts"],
+      "project": ["src/**/*.ts"]
+    }
+  },
+  "exclude": ["duplicates"]
+}

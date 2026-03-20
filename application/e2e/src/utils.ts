@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export async function login(
   page: Page,
@@ -62,41 +62,6 @@ export async function waitForVisibleMedia(page: Page): Promise<void> {
 /** GIF動画をマスク（フレームが毎回変わるため） */
 export function dynamicMediaMask(page: Page) {
   return [page.locator("canvas"), page.locator("video"), page.locator("img[src$='.gif']")];
-}
-
-export async function waitForImageToLoad(imageLocator: Locator): Promise<void> {
-  await imageLocator.scrollIntoViewIfNeeded();
-  await expect(imageLocator).toBeVisible();
-  await expect(async () => {
-    expect(
-      await (
-        await imageLocator.evaluateHandle((element, prop) => {
-          if (!(element instanceof HTMLImageElement)) {
-            throw new Error("Element is not an image");
-          }
-          return element[prop as keyof typeof element];
-        }, "naturalWidth")
-      ).jsonValue(),
-    ).toBeGreaterThan(0);
-  }).toPass();
-}
-
-export async function waitForAllImagesToLoad(
-  locator: Locator,
-  expectedNumberOfImages: number = 1,
-): Promise<void> {
-  const images = locator.locator("img");
-
-  await expect(async () => {
-    await locator.scrollIntoViewIfNeeded();
-    await expect(locator).toBeVisible();
-    await expect(images.count()).resolves.toBeGreaterThanOrEqual(expectedNumberOfImages);
-  }).toPass();
-
-  const count = await images.count();
-  for (let i = 0; i < count; i++) {
-    await waitForImageToLoad(images.nth(i));
-  }
 }
 
 export async function scrollEntire(page: Page): Promise<void> {
