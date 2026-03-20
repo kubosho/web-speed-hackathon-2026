@@ -26,7 +26,6 @@ const AuthModalPageComponent = ({
     formValueSelector("auth")(state, "type"),
   );
   const type = currentType ?? initialValues.type;
-
   return (
     <form className="grid gap-y-6" onSubmit={handleSubmit}>
       <h2 className="text-center text-2xl font-bold">
@@ -51,7 +50,6 @@ const AuthModalPageComponent = ({
             label: "ユーザー名",
             leftItem: <span className="text-cax-text-subtle leading-none">@</span>,
             autoComplete: "username",
-            autoFocus: true,
           }}
         />
 
