@@ -74,3 +74,13 @@ fly deploy --app <app-name>
 - oxlint with plugins: eslint, typescript, unicorn, react, react-perf, oxc
 - oxfmt for formatting (import sorting enabled)
 - `react/jsx-key` rule is disabled in `.oxlintrc.json`
+
+## Post-optimization logging
+
+After each performance improvement is implemented and committed, append a section to the article file at:
+`/Users/kubosho/src/github.com/kubosho/articles/articles/Web Speed Hackathon 2026参加記.md`
+
+Each section must include:
+- What was changed and why
+- Before/after metrics if measured
+- Code snippets showing the key change
