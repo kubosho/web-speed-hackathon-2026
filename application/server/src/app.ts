@@ -10,7 +10,18 @@ export const app = Express();
 
 app.set("trust proxy", true);
 
-app.use(compression());
+app.use(
+  compression({
+    // Skip already-compressed binary media formats
+    filter: (req, res) => {
+      const url = req.url;
+      if (url.startsWith("/images/") || url.startsWith("/movies/") || url.startsWith("/sounds/")) {
+        return false;
+      }
+      return compression.filter(req, res);
+    },
+  }),
+);
 app.use(sessionMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.raw({ limit: "10mb" }));
