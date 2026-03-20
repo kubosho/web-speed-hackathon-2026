@@ -26,7 +26,6 @@ const config = {
   devtool: false,
   entry: {
     main: [
-      "jquery-binarytransport",
       path.resolve(SRC_PATH, "./index.css"),
       path.resolve(SRC_PATH, "./buildinfo.ts"),
       path.resolve(SRC_PATH, "./index.tsx"),
@@ -88,10 +87,8 @@ const config = {
   },
   plugins: [
     new rspack.ProvidePlugin({
-      $: "jquery",
       AudioContext: ["standardized-audio-context", "AudioContext"],
       Buffer: ["buffer", "Buffer"],
-      "window.jQuery": "jquery",
     }),
     new rspack.DefinePlugin({
       "process.env.BUILD_DATE": JSON.stringify(new Date().toISOString()),
