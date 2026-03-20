@@ -87,7 +87,6 @@ const config = {
   },
   plugins: [
     new rspack.ProvidePlugin({
-      AudioContext: ["standardized-audio-context", "AudioContext"],
       Buffer: ["buffer", "Buffer"],
     }),
     new rspack.DefinePlugin({
