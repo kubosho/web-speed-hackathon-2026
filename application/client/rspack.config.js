@@ -72,12 +72,15 @@ const config = {
       {
         resourceQuery: /binary/,
         type: "asset/resource",
+        generator: {
+          filename: "assets/[name]-[contenthash][ext]",
+        },
       },
     ],
   },
   output: {
     chunkFilename: "scripts/chunk-[contenthash].js",
-    filename: "scripts/[name].js",
+    filename: "scripts/[name]-[contenthash].js",
 
     path: DIST_PATH,
     publicPath: "/",
@@ -96,7 +99,7 @@ const config = {
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     new rspack.CssExtractRspackPlugin({
-      filename: "styles/[name].css",
+      filename: "styles/[name]-[contenthash].css",
     }),
     new rspack.CopyRspackPlugin({
       patterns: [
