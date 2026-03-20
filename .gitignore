@@ -224,3 +224,7 @@ application/.lighthouseci
 application/upload/**
 !application/upload/**/
 !application/upload/**/.gitkeep
+
+# Playwright MCP screenshots
+.playwright-mcp/
+post-detail-fullpage.png
