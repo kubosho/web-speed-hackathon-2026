@@ -9,7 +9,7 @@ Web Speed Hackathon 2026 competition app — a fictional SNS called "CaX". The g
 ## Architecture
 
 Monorepo with pnpm workspaces under `/application`:
-- **client** — React 19 SPA, built with Webpack 5, Babel (IE11 target), PostCSS
+- **client** — React 19 SPA, built with Webpack 5, Babel (targeting latest Chrome), PostCSS
 - **server** — Express 5 API, Sequelize ORM with SQLite, runs on port 3000 (or `PORT` env)
 - **e2e** — Playwright VRT and functional tests
 
