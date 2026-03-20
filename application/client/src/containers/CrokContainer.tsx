@@ -85,3 +85,4 @@ export const CrokContainer = ({ activeUser, authModalId }: Props) => {
     </>
   );
 };
+export default CrokContainer;

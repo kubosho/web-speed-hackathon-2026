@@ -88,3 +88,4 @@ export const AuthModalContainer = ({ id, onUpdateActiveUser }: Props) => {
     </Modal>
   );
 };
+export default AuthModalContainer;

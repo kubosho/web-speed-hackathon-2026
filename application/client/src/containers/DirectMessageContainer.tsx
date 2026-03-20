@@ -139,3 +139,4 @@ export const DirectMessageContainer = ({ activeUser, authModalId }: Props) => {
     </>
   );
 };
+export default DirectMessageContainer;
