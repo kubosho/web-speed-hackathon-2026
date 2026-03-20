@@ -4,8 +4,20 @@ node_modules
 *.log
 
 application/.lighthouseci
-application/e2e/test-results
-application/e2e/playwright-report
+application/e2e
 application/dist
 application/server/seeds
 application/server/upload
+application/README.md
+application/LICENSE
+
+# Testing & tooling (not needed in production)
+scoring-tool
+docs
+
+# Config files not needed in production
+lighthouserc.cjs
+mise.toml
+CLAUDE.md
+.claude
+README.md
