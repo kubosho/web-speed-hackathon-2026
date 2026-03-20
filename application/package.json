@@ -11,7 +11,8 @@
     "format": "pnpm run format:oxlint && pnpm run format:oxfmt",
     "format:oxlint": "oxlint --fix",
     "format:oxfmt": "oxfmt",
-    "lighthouse": "lhci autorun --config ../lighthouserc.cjs"
+    "lighthouse": "lhci autorun --config ../lighthouserc.cjs",
+    "lighthouse:page": "lhci autorun --config ../lighthouserc.cjs --collect.numberOfRuns=1"
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1",

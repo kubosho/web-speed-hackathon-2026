@@ -49,7 +49,9 @@ pnpm test:update                       # Update VRT snapshots
 E2E_WORKERS=2 pnpm test                # Control parallelism
 
 # Lighthouse CI (from /application, with server running)
-pnpm lighthouse                        # Run LHCI against localhost:3000
+pnpm lighthouse                        # Run LHCI against all pages
+pnpm lighthouse:page -- --collect.url="http://localhost:3000/"        # Home page only
+pnpm lighthouse:page -- --collect.url="http://localhost:3000/search"  # Search page only
 
 # Scoring (from /scoring-tool)
 pnpm start -- --applicationUrl <url>
