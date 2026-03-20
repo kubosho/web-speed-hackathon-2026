@@ -220,6 +220,7 @@ $RECYCLE.BIN/
 .claude/scheduled_tasks.lock
 
 # Upload files (directories kept via .gitkeep)
+application/.lighthouseci
 application/upload/**
 !application/upload/**/
 !application/upload/**/.gitkeep

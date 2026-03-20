@@ -3,6 +3,7 @@ node_modules
 .jj
 *.log
 
+application/.lighthouseci
 application/e2e/test-results
 application/e2e/playwright-report
 application/dist
