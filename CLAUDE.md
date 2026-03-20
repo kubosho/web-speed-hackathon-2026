@@ -48,6 +48,9 @@ E2E_BASE_URL=https://example.fly.dev pnpm test  # Run against deployed app
 pnpm test:update                       # Update VRT snapshots
 E2E_WORKERS=2 pnpm test                # Control parallelism
 
+# Lighthouse CI (from /application, with server running)
+pnpm lighthouse                        # Run LHCI against localhost:3000
+
 # Scoring (from /scoring-tool)
 pnpm start -- --applicationUrl <url>
 
@@ -75,12 +78,6 @@ fly deploy --app <app-name>
 - oxfmt for formatting (import sorting enabled)
 - `react/jsx-key` rule is disabled in `.oxlintrc.json`
 
-## Post-optimization logging
+## Performance optimization workflow
 
-After each performance improvement is implemented and committed, append a section to the article file at:
-`/Users/kubosho/src/github.com/kubosho/articles/articles/web-speed-hackathon-2026.md`
-
-Each section must include:
-- What was changed and why
-- Before/after metrics if measured
-- Code snippets showing the key change
+See `.claude/rules/perf-optimization.md` for the full invariant-based workflow.
