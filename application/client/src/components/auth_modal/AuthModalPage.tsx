@@ -51,6 +51,7 @@ const AuthModalPageComponent = ({
             label: "ユーザー名",
             leftItem: <span className="text-cax-text-subtle leading-none">@</span>,
             autoComplete: "username",
+            autoFocus: true,
           }}
         />
 
