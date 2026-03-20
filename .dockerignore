@@ -1,6 +1,10 @@
 node_modules
 .git
+.jj
 *.log
 
+application/e2e/test-results
+application/e2e/playwright-report
+application/dist
 application/server/seeds
 application/server/upload
