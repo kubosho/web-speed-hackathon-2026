@@ -31,6 +31,5 @@ export async function convertMovie(file: File, options: Options): Promise<Blob> 
 
   ffmpeg.terminate();
 
-  const blob = new Blob([output]);
-  return blob;
+  return new Blob([output]);
 }
