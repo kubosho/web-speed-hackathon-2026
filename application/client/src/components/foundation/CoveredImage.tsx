@@ -37,12 +37,7 @@ export const CoveredImage = ({ loading = "eager", src }: Props) => {
 
   return (
     <div className="relative h-full w-full overflow-hidden">
-      <img
-        alt=""
-        className="h-full w-full object-cover"
-        loading={loading}
-        src={src}
-      />
+      <img alt="" className="h-full w-full object-cover" loading={loading} src={src} />
 
       <button
         className="border-cax-border bg-cax-surface-raised/90 text-cax-text-muted hover:bg-cax-surface absolute right-1 bottom-1 rounded-full border px-2 py-1 text-center text-xs"
@@ -58,7 +53,7 @@ export const CoveredImage = ({ loading = "eager", src }: Props) => {
         <div className="grid gap-y-6">
           <h1 className="text-center text-2xl font-bold">画像の説明</h1>
 
-          <p className="text-sm">{isLoadingAlt ? "読み込み中..." : alt ?? ""}</p>
+          <p className="text-sm">{isLoadingAlt ? "読み込み中..." : (alt ?? "")}</p>
 
           <Button variant="secondary" command="close" commandfor={dialogId}>
             閉じる

@@ -52,15 +52,16 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
       Promise.all([
         import("@imagemagick/magick-wasm"),
         import("@web-speed-hackathon-2026/client/src/utils/convert_image"),
-      ]).then(([{ MagickFormat }, { convertImage }]) =>
-        Promise.all(
-          files.map((file) =>
-            convertImage(file, { extension: MagickFormat.Jpg }).then(
-              (blob) => new File([blob], "converted.jpg", { type: "image/jpeg" }),
+      ])
+        .then(([{ MagickFormat }, { convertImage }]) =>
+          Promise.all(
+            files.map((file) =>
+              convertImage(file, { extension: MagickFormat.Jpg }).then(
+                (blob) => new File([blob], "converted.jpg", { type: "image/jpeg" }),
+              ),
             ),
           ),
-        ),
-      )
+        )
         .then((convertedFiles) => {
           setParams((params) => ({
             ...params,
@@ -83,18 +84,18 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
     if (isValid) {
       setIsConverting(true);
 
-      import("@web-speed-hackathon-2026/client/src/utils/convert_sound").then(({ convertSound }) =>
-        convertSound(file, { extension: "mp3" }),
-      ).then((converted) => {
-        setParams((params) => ({
-          ...params,
-          images: [],
-          movie: undefined,
-          sound: new File([converted], "converted.mp3", { type: "audio/mpeg" }),
-        }));
+      import("@web-speed-hackathon-2026/client/src/utils/convert_sound")
+        .then(({ convertSound }) => convertSound(file, { extension: "mp3" }))
+        .then((converted) => {
+          setParams((params) => ({
+            ...params,
+            images: [],
+            movie: undefined,
+            sound: new File([converted], "converted.mp3", { type: "audio/mpeg" }),
+          }));
 
-        setIsConverting(false);
-      });
+          setIsConverting(false);
+        });
     }
   }, []);
 
