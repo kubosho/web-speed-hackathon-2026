@@ -77,7 +77,8 @@
     "postcss-loader": "8.2.0",
     "postcss-preset-env": "10.4.0",
     "react-markdown": "10.1.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "webpack-bundle-analyzer": "5.2.0"
   },
   "engines": {
     "node": "24.14.0"

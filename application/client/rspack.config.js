@@ -1,5 +1,8 @@
 const path = require("path");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { rspack } = require("@rspack/core");
+
+const ANALYZE = process.env.ANALYZE === "true";
 
 const SRC_PATH = path.resolve(__dirname, "./src");
 const PUBLIC_PATH = path.resolve(__dirname, "../public");
@@ -152,5 +155,9 @@ const config = {
     },
   ],
 };
+
+if (ANALYZE) {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
 
 module.exports = config;
