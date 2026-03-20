@@ -9,14 +9,14 @@ Web Speed Hackathon 2026 competition app — a fictional SNS called "CaX". The g
 ## Architecture
 
 Monorepo with pnpm workspaces under `/application`:
-- **client** — React 19 SPA, built with Webpack 5, Babel (targeting latest Chrome), PostCSS
+- **client** — React 19 SPA, built with Rspack (builtin:swc-loader), PostCSS
 - **server** — Express 5 API, Sequelize ORM with SQLite, runs on port 3000 (or `PORT` env)
 - **e2e** — Playwright VRT and functional tests
 
 Scoring tool lives in `/scoring-tool` (Lighthouse-based performance measurement).
 
 ### Key architectural details
-- Client webpack config: `application/client/webpack.config.js`
+- Client rspack config: `application/client/rspack.config.js`
 - Server entry: `application/server/src/index.ts` (Express + WebSocket support)
 - Database: SQLite file at `application/database.sqlite`, copied to `/tmp` at startup
 - API routes mounted at `/api/v1` via `apiRouter`
@@ -34,7 +34,7 @@ mise trust && mise install    # Install Node 24.14.0 + pnpm 10.32.1
 pnpm install --frozen-lockfile
 
 # Build & Run
-pnpm build                    # Build client (webpack)
+pnpm build                    # Build client (rspack)
 pnpm start                    # Start server at localhost:3000
 
 # Code Quality
