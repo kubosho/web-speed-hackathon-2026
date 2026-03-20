@@ -108,13 +108,13 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
       setIsConverting(true);
 
       import("@web-speed-hackathon-2026/client/src/utils/convert_movie")
-        .then(({ convertMovie }) => convertMovie(file, { extension: "gif" }))
+        .then(({ convertMovie }) => convertMovie(file, { extension: "mp4" }))
         .then((converted) => {
           setParams((params) => ({
             ...params,
             images: [],
-            movie: new File([converted], "converted.gif", {
-              type: "image/gif",
+            movie: new File([converted], "converted.mp4", {
+              type: "video/mp4",
             }),
             sound: undefined,
           }));
