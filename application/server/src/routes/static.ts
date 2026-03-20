@@ -10,6 +10,20 @@ import {
 
 export const staticRouter = Router();
 
+// Contenthash付きファイルに長期キャッシュを設定
+staticRouter.use("/scripts", (_req, res, next) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  next();
+});
+staticRouter.use("/styles", (_req, res, next) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  next();
+});
+staticRouter.use("/assets", (_req, res, next) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  next();
+});
+
 // SPA 対応のため、ファイルが存在しないときに index.html を返す
 staticRouter.use(history());
 
