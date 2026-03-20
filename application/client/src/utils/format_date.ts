@@ -10,7 +10,7 @@ const timeFormat = new Intl.DateTimeFormat("ja", {
   hour12: false,
 });
 
-const relativeFormat = new Intl.RelativeTimeFormat("ja", { numeric: "auto" });
+const relativeFormat = new Intl.RelativeTimeFormat("ja", { numeric: "always" });
 
 const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
   ["year", 365 * 24 * 60 * 60 * 1000],
