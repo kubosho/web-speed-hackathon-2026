@@ -78,7 +78,7 @@ fly deploy --app <app-name>
 ## Post-optimization logging
 
 After each performance improvement is implemented and committed, append a section to the article file at:
-`/Users/kubosho/src/github.com/kubosho/articles/articles/Web Speed Hackathon 2026参加記.md`
+`/Users/kubosho/src/github.com/kubosho/articles/articles/web-speed-hackathon-2026.md`
 
 Each section must include:
 - What was changed and why
