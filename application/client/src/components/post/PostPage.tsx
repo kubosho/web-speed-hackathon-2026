@@ -1,4 +1,4 @@
-import { CommentList } from "@web-speed-hackathon-2026/client/src/components/post/CommentList";
+import { CommentItem } from "@web-speed-hackathon-2026/client/src/components/post/CommentItem";
 import { PostItem } from "@web-speed-hackathon-2026/client/src/components/post/PostItem";
 
 interface Props {
@@ -10,7 +10,11 @@ export const PostPage = ({ comments, post }: Props) => {
   return (
     <>
       <PostItem post={post} />
-      <CommentList comments={comments} />
+      <div>
+        {comments.map((comment) => {
+          return <CommentItem key={comment.id} comment={comment} />;
+        })}
+      </div>
     </>
   );
 };
