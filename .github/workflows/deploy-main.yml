@@ -1,0 +1,55 @@
+name: Deploy & Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  APP_URL: https://kubosho-wsh-2026.fly.dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - uses: superfly/flyctl-actions/setup-flyctl@fc53c09e1bc3be6f54706524e3b82c4f462f77be
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --app kubosho-wsh-2026 --remote-only
+
+      - name: Wait for deployment to be healthy
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf "$APP_URL/" > /dev/null 2>&1; then
+              echo "App is healthy"
+              exit 0
+            fi
+            echo "Waiting for app... ($i/30)"
+            sleep 5
+          done
+          echo "App did not become healthy in time"
+          exit 1
+
+  lighthouse:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Initialize database
+        run: |
+          curl -sf -X POST "$APP_URL/api/v1/initialize" > /dev/null
+          echo "Database initialized"
+        env:
+          APP_URL: https://kubosho-wsh-2026.fly.dev
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@2f8dda6cf4de7d73b29853c3f29e73a01e297bd8
+        with:
+          configPath: ./lighthouserc.cjs
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        env:
+          LHCI_BASE_URL: https://kubosho-wsh-2026.fly.dev
