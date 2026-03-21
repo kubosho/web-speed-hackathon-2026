@@ -6,13 +6,15 @@ import { Modal } from "@web-speed-hackathon-2026/client/src/components/modal/Mod
 interface Props {
   alt: string;
   loading?: "lazy" | "eager";
+  sizes?: string;
   src: string;
+  srcSet?: string;
 }
 
 /**
  * アスペクト比を維持したまま、要素のコンテンツボックス全体を埋めるように画像を拡大縮小します
  */
-export const CoveredImage = ({ alt, loading = "eager", src }: Props) => {
+export const CoveredImage = ({ alt, loading = "eager", sizes, src, srcSet }: Props) => {
   const dialogId = useId();
   const handleDialogClick = useCallback((ev: MouseEvent<HTMLDialogElement>) => {
     ev.stopPropagation();
@@ -20,7 +22,7 @@ export const CoveredImage = ({ alt, loading = "eager", src }: Props) => {
 
   return (
     <div className="relative h-full w-full overflow-hidden">
-      <img alt={alt} className="h-full w-full object-cover" loading={loading} src={src} />
+      <img alt={alt} className="h-full w-full object-cover" loading={loading} sizes={sizes} src={src} srcSet={srcSet} />
 
       <button
         className="border-cax-border bg-cax-surface-raised/90 text-cax-text-muted hover:bg-cax-surface absolute right-1 bottom-1 rounded-full border px-2 py-1 text-center text-xs"

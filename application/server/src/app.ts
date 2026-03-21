@@ -3,6 +3,7 @@ import compression from "compression";
 import Express from "express";
 
 import { apiRouter } from "@web-speed-hackathon-2026/server/src/routes/api";
+import { imageResizeRouter } from "@web-speed-hackathon-2026/server/src/routes/image_resize";
 import { staticRouter } from "@web-speed-hackathon-2026/server/src/routes/static";
 import { sessionMiddleware } from "@web-speed-hackathon-2026/server/src/session";
 
@@ -27,4 +28,5 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw({ limit: "10mb" }));
 
 app.use("/api/v1", apiRouter);
+app.use(imageResizeRouter);
 app.use(staticRouter);

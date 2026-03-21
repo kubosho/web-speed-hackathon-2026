@@ -1,7 +1,7 @@
 import classNames from "classnames";
 
 import { CoveredImage } from "@web-speed-hackathon-2026/client/src/components/foundation/CoveredImage";
-import { getImagePath } from "@web-speed-hackathon-2026/client/src/utils/get_path";
+import { getImagePath, getImageSrcSet } from "@web-speed-hackathon-2026/client/src/utils/get_path";
 
 interface Props {
   images: Models.Image[];
@@ -23,7 +23,13 @@ export const ImageArea = ({ images }: Props) => {
                 "row-span-2": images.length <= 2 || (images.length === 3 && idx === 0),
               })}
             >
-              <CoveredImage alt={image.alt} loading={idx === 0 ? "eager" : "lazy"} src={getImagePath(image.id)} />
+              <CoveredImage
+                alt={image.alt}
+                loading={idx === 0 ? "eager" : "lazy"}
+                sizes={images.length === 1 ? "(max-width: 640px) 100vw, 640px" : "(max-width: 640px) 50vw, 320px"}
+                src={getImagePath(image.id)}
+                srcSet={getImageSrcSet(image.id)}
+              />
             </div>
           );
         })}
