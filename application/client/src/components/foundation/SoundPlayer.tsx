@@ -1,6 +1,5 @@
 import { ReactEventHandler, useCallback, useRef, useState } from "react";
 
-import { AspectRatioBox } from "@web-speed-hackathon-2026/client/src/components/foundation/AspectRatioBox";
 import { FontAwesomeIcon } from "@web-speed-hackathon-2026/client/src/components/foundation/FontAwesomeIcon";
 import { SoundWaveSVG } from "@web-speed-hackathon-2026/client/src/components/foundation/SoundWaveSVG";
 import { getSoundPath } from "@web-speed-hackathon-2026/client/src/utils/get_path";
@@ -49,17 +48,15 @@ export const SoundPlayer = ({ sound }: Props) => {
           {sound.artist}
         </p>
         <div className="pt-2">
-          <AspectRatioBox aspectHeight={1} aspectWidth={10}>
-            <div className="relative h-full w-full">
-              <div className="absolute inset-0 h-full w-full">
-                <SoundWaveSVG soundId={sound.id} />
-              </div>
-              <div
-                className="bg-cax-surface-subtle absolute inset-0 h-full w-full opacity-75"
-                style={{ left: `${currentTimeRatio * 100}%` }}
-              ></div>
+          <div className="relative w-full" style={{ aspectRatio: "10 / 1" }}>
+            <div className="absolute inset-0 h-full w-full">
+              <SoundWaveSVG soundId={sound.id} />
             </div>
-          </AspectRatioBox>
+            <div
+              className="bg-cax-surface-subtle absolute inset-0 h-full w-full opacity-75"
+              style={{ left: `${currentTimeRatio * 100}%` }}
+            ></div>
+          </div>
         </div>
       </div>
     </div>
