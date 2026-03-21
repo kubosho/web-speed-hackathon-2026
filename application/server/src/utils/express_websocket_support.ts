@@ -40,6 +40,13 @@ Express.application.listen = function (this: Express.Application, ...args: unkno
     wss.handleUpgrade(rawReq, socket, head, (ws) => {
       req.ws = ws;
 
+      ws.on("close", () => {
+        if (wss.clients.size === 0) {
+          wss.close();
+          mapping.delete(req.path);
+        }
+      });
+
       const dummy = new http.ServerResponse(req);
       dummy.writeHead = function writeHead(statusCode: number) {
         if (statusCode > 200) {
@@ -52,10 +59,6 @@ Express.application.listen = function (this: Express.Application, ...args: unkno
 
       const notfound = () => {
         ws.close();
-        if (wss.clients.size === 0) {
-          wss.close();
-          mapping.delete(req.path);
-        }
       };
 
       // @ts-expect-error

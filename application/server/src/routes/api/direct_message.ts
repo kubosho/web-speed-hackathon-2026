@@ -70,10 +70,13 @@ directMessageRouter.ws("/dm/unread", async (req, _res) => {
     req.ws.send(JSON.stringify({ type: "dm:unread", payload }));
   };
 
-  eventhub.on(`dm:unread/${req.session.userId}`, handler);
-  req.ws.on("close", () => {
-    eventhub.off(`dm:unread/${req.session.userId}`, handler);
-  });
+  const eventKey = `dm:unread/${req.session.userId}`;
+  eventhub.on(eventKey, handler);
+  const cleanup = () => {
+    eventhub.off(eventKey, handler);
+  };
+  req.ws.on("close", cleanup);
+  req.ws.on("error", cleanup);
 
   const unreadCount = await DirectMessage.count({
     distinct: true,
@@ -133,21 +136,25 @@ directMessageRouter.ws("/dm/:conversationId", async (req, _res) => {
       ? conversation.initiatorId
       : conversation.memberId;
 
+  const messageKey = `dm:conversation/${conversation.id}:message`;
+  const typingKey = `dm:conversation/${conversation.id}:typing/${peerId}`;
+
   const handleMessageUpdated = (payload: unknown) => {
     req.ws.send(JSON.stringify({ type: "dm:conversation:message", payload }));
   };
-  eventhub.on(`dm:conversation/${conversation.id}:message`, handleMessageUpdated);
-  req.ws.on("close", () => {
-    eventhub.off(`dm:conversation/${conversation.id}:message`, handleMessageUpdated);
-  });
+  eventhub.on(messageKey, handleMessageUpdated);
 
   const handleTyping = (payload: unknown) => {
     req.ws.send(JSON.stringify({ type: "dm:conversation:typing", payload }));
   };
-  eventhub.on(`dm:conversation/${conversation.id}:typing/${peerId}`, handleTyping);
-  req.ws.on("close", () => {
-    eventhub.off(`dm:conversation/${conversation.id}:typing/${peerId}`, handleTyping);
-  });
+  eventhub.on(typingKey, handleTyping);
+
+  const cleanup = () => {
+    eventhub.off(messageKey, handleMessageUpdated);
+    eventhub.off(typingKey, handleTyping);
+  };
+  req.ws.on("close", cleanup);
+  req.ws.on("error", cleanup);
 });
 
 directMessageRouter.post("/dm/:conversationId/messages", async (req, res) => {
