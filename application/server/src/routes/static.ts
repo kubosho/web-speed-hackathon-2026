@@ -1,7 +1,11 @@
+import fs from "node:fs";
+import path from "node:path";
+
 import history from "connect-history-api-fallback";
 import { Router } from "express";
 import serveStatic from "serve-static";
 
+import { Post } from "@web-speed-hackathon-2026/server/src/models";
 import {
   CLIENT_DIST_PATH,
   PUBLIC_PATH,
@@ -9,6 +13,39 @@ import {
 } from "@web-speed-hackathon-2026/server/src/paths";
 
 export const staticRouter = Router();
+
+// Inject <link rel="preload"> for the LCP image into index.html on the home page
+let cachedHtmlWithPreload: string | null = null;
+
+staticRouter.get("/", async (_req, res, next) => {
+  if (cachedHtmlWithPreload == null) {
+    try {
+      // Find the first post that has images (matches the LCP element on the timeline)
+      const posts = await Post.findAll({ limit: 10, offset: 0 });
+      type PostWithImages = { images?: { id: string }[] };
+      const firstPostWithImage = posts.find(
+        (p) => ((p as unknown as PostWithImages).images?.length ?? 0) > 0,
+      );
+      const firstImageId = (firstPostWithImage as unknown as PostWithImages)?.images?.[0]?.id;
+
+      const htmlPath = path.join(CLIENT_DIST_PATH, "index.html");
+      let html = fs.readFileSync(htmlPath, "utf-8");
+
+      if (firstImageId) {
+        const preloadTag = `<link rel="preload" as="image" href="/images/${firstImageId}.avif" type="image/avif">`;
+        html = html.replace("<head>", `<head>${preloadTag}`);
+      }
+
+      cachedHtmlWithPreload = html;
+    } catch {
+      next();
+      return;
+    }
+  }
+
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.send(cachedHtmlWithPreload);
+});
 
 // Contenthash付きファイルに長期キャッシュを設定
 staticRouter.use("/scripts", (_req, res, next) => {
