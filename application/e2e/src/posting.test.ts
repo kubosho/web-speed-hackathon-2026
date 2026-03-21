@@ -18,7 +18,7 @@ test.describe("投稿機能", () => {
 
     const textarea = page.getByPlaceholder("いまなにしてる？");
     await expect(textarea).toBeVisible({ timeout: 30_000 });
-    await textarea.fill(postText);
+    await textarea.pressSequentially(postText);
 
     // VRT: 投稿モーダル（テキスト入力後）
     await waitForVisibleMedia(page);
@@ -45,7 +45,7 @@ test.describe("投稿機能", () => {
 
     const textarea = page.getByPlaceholder("いまなにしてる？");
     await expect(textarea).toBeVisible({ timeout: 30_000 });
-    await textarea.fill(postText);
+    await textarea.pressSequentially(postText);
 
     // 画像ファイルを添付
     const fileInput = page.locator('input[type="file"][accept="image/*"]');
