@@ -1,14 +1,7 @@
-import session, { MemoryStore } from "express-session";
+import cookieSession from "cookie-session";
 
-export const sessionStore = new MemoryStore();
-
-export const sessionMiddleware = session({
-  store: sessionStore,
-  proxy: true,
-  resave: false,
-  saveUninitialized: false,
-  secret: "secret",
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000,
-  },
+export const sessionMiddleware = cookieSession({
+  name: "session",
+  keys: ["secret"],
+  maxAge: 24 * 60 * 60 * 1000,
 });

@@ -1,8 +1,19 @@
 import WebSocket from "ws";
 
-declare module "express-session" {
-  interface SessionData {
-    userId?: string | undefined;
+// Typed session object for cookie-session.
+// cookie-session middleware always initializes req.session before route handlers.
+interface AppSession {
+  userId?: string | undefined;
+  isNew?: boolean | undefined;
+  isChanged?: boolean | undefined;
+  isPopulated?: boolean | undefined;
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      session: AppSession;
+    }
   }
 }
 
