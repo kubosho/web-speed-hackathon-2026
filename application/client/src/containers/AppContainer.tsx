@@ -44,8 +44,12 @@ export const AppContainer = () => {
   }, [pathname]);
 
   const [activeUser, setActiveUser] = useState<Models.User | null>(null);
-  const [isLoadingActiveUser, setIsLoadingActiveUser] = useState(true);
+  const hasSession = document.cookie.includes("connect.sid");
+  const [isLoadingActiveUser, setIsLoadingActiveUser] = useState(hasSession);
   useEffect(() => {
+    if (!hasSession) {
+      return;
+    }
     void fetchJSON<Models.User>("/api/v1/me")
       .then((user) => {
         setActiveUser(user);
@@ -53,7 +57,7 @@ export const AppContainer = () => {
       .finally(() => {
         setIsLoadingActiveUser(false);
       });
-  }, [setActiveUser, setIsLoadingActiveUser]);
+  }, [hasSession, setActiveUser, setIsLoadingActiveUser]);
   const handleLogout = useCallback(async () => {
     await sendJSON("/api/v1/signout", {});
     setActiveUser(null);
