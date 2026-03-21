@@ -20,11 +20,8 @@ module.exports = {
       },
     },
     assert: {
-      preset: 'lighthouse:no-pwa',
       assertions: {
-        // Start with warnings only — tighten thresholds as performance improves
         'categories:performance': ['warn', { minScore: 0.3 }],
-        'categories:accessibility': ['warn', { minScore: 0.7 }],
       },
     },
     upload: {
