@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, useCallback, useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useCallback, useRef, useState } from "react";
 
 import { FontAwesomeIcon } from "@web-speed-hackathon-2026/client/src/components/foundation/FontAwesomeIcon";
 import { ModalErrorMessage } from "@web-speed-hackathon-2026/client/src/components/modal/ModalErrorMessage";
@@ -37,14 +37,8 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
 
   const [hasFileError, setHasFileError] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
-
-  const handleChangeText = useCallback<ChangeEventHandler<HTMLTextAreaElement>>((ev) => {
-    const value = ev.currentTarget.value;
-    setParams((params) => ({
-      ...params,
-      text: value,
-    }));
-  }, []);
+  const [hasText, setHasText] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChangeImages = useCallback<ChangeEventHandler<HTMLInputElement>>((ev) => {
     const files = Array.from(ev.currentTarget.files ?? []).slice(0, 4);
@@ -134,8 +128,10 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
   const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
     (ev) => {
       ev.preventDefault();
+      const text = textareaRef.current?.value ?? "";
+      if (text === "") return;
       onResetError();
-      onSubmit(params);
+      onSubmit({ ...params, text });
     },
     [params, onSubmit, onResetError],
   );
@@ -147,11 +143,13 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
       </h2>
 
       <textarea
+        ref={textareaRef}
         className="border-cax-border placeholder-cax-text-subtle focus:outline-cax-brand w-full resize-none rounded-xl border px-3 py-2 focus:outline-2 focus:outline-offset-2"
         rows={4}
-        value={params.text}
-        onChange={handleChangeText}
+        defaultValue=""
+        onInput={(ev) => setHasText(ev.currentTarget.value !== "")}
         placeholder="いまなにしてる？"
+        name="text"
       />
 
       <div className="text-cax-text flex w-full items-center justify-evenly">
@@ -179,7 +177,7 @@ export const NewPostModalPage = ({ id, hasError, isLoading, onResetError, onSubm
       </div>
 
       <ModalSubmitButton
-        disabled={isConverting || isLoading || params.text === ""}
+        disabled={isConverting || isLoading || !hasText}
         loading={isConverting || isLoading}
       >
         {isConverting || isLoading ? "変換中" : "投稿する"}
