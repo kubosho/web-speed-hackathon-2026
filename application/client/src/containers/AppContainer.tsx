@@ -44,7 +44,7 @@ export const AppContainer = () => {
   }, [pathname]);
 
   const [activeUser, setActiveUser] = useState<Models.User | null>(null);
-  const hasSession = document.cookie.includes("connect.sid");
+  const hasSession = document.cookie.includes("session=");
   const [isLoadingActiveUser, setIsLoadingActiveUser] = useState(hasSession);
   useEffect(() => {
     if (!hasSession) {

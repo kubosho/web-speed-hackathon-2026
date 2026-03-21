@@ -4,4 +4,5 @@ export const sessionMiddleware = cookieSession({
   name: "session",
   keys: ["secret"],
   maxAge: 24 * 60 * 60 * 1000,
+  httpOnly: false,
 });
