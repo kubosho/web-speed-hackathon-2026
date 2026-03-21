@@ -32,7 +32,7 @@ staticRouter.get("/", async (_req, res, next) => {
       let html = fs.readFileSync(htmlPath, "utf-8");
 
       if (firstImageId) {
-        const preloadTag = `<link rel="preload" as="image" href="/images/${firstImageId}.avif?w=640" type="image/avif" imagesrcset="/images/${firstImageId}.avif?w=320 320w, /images/${firstImageId}.avif?w=640 640w, /images/${firstImageId}.avif?w=960 960w, /images/${firstImageId}.avif?w=1280 1280w" imagesizes="(max-width: 640px) 100vw, 640px">`;
+        const preloadTag = `<link rel="preload" as="image" href="/images/${firstImageId}_w640.avif" type="image/avif" imagesrcset="/images/${firstImageId}_w320.avif 320w, /images/${firstImageId}_w640.avif 640w, /images/${firstImageId}_w960.avif 960w, /images/${firstImageId}.avif 1280w" imagesizes="(max-width: 640px) 100vw, 640px">`;
         html = html.replace("<head>", `<head>${preloadTag}`);
       }
 
